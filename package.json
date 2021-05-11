@@ -1,0 +1,19 @@
+{
+  "name": "stream",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nezuko-dev/stream",
+  "author": "tuguldur <aa402115@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
+    "mongoose": "^5.12.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
