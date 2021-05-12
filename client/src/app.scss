@@ -1,3 +1,20 @@
 .ant-btn {
   border-radius: 4px;
 }
+.ant-card {
+  border-radius: 8px;
+}
+.app {
+  .main-container {
+    // min-height: calc(100vh - 64px);
+    padding: 22px 64px 32px 64px;
+    @media (max-width: 1024px) {
+      padding-right: 48px;
+      padding-left: 48px;
+    }
+    @media (max-width: 768px) {
+      padding-right: 16px;
+      padding-left: 16px;
+    }
+  }
+}
