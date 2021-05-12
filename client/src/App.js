@@ -1,7 +1,58 @@
-import React from "react";
-
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { PrivateRoute, Header } from "components";
+import { Auth, Register } from "pages";
+import { User } from "context/user";
+import "antd/dist/antd.dark.css";
+import "./app.scss";
+import axios from "axios";
+import Cookies from "js-cookie";
 const App = () => {
-  return <div className="App">Hello World</div>;
+  const [user, setUser] = useState(false);
+  useEffect(() => {
+    if (Cookies.get("stream-token")) {
+      axios
+        .get("/api/auth")
+        .then((response) => {
+          if (response.data.status) {
+            setUser(response.data.user);
+          }
+        })
+        .catch(() => {
+          Cookies.remove("stream-token");
+          return <Redirect to="/auth" />;
+        });
+    }
+  }, []);
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+  return (
+    <Router>
+      <User.Provider value={value}>
+        <div className="app">
+          <Header />
+          <Switch>
+            <Router
+              exact
+              path="/"
+              component={() => <div className="home">home</div>}
+            />
+            <Route exact path="/auth" component={Auth} />
+            <Route exact path="/auth/create" component={Register} />
+            <PrivateRoute
+              exact
+              path="/account"
+              component={() => <span> hi dear. </span>}
+            />
+            <Redirect to="/" />
+          </Switch>
+        </div>
+      </User.Provider>
+    </Router>
+  );
 };
-
 export default App;

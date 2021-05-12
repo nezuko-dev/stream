@@ -5,15 +5,28 @@
   "repository": "https://github.com/nezuko-dev/stream",
   "author": "tuguldur <aa402115@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "seed-admin": "node src/seed/admin.js"
+  },
   "dependencies": {
+    "aws-sdk": "^2.905.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
+    "cookie-session": "^1.4.0",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "express-validator": "^6.11.1",
-    "mongoose": "^5.12.8"
+    "mongoose": "^5.12.8",
+    "nodemailer": "^6.6.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "concurrently": "^6.1.0",
     "nodemon": "^2.0.7"
   }
 }
