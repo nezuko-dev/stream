@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { PrivateRoute, Header } from "components";
-import { Auth, Register, Forgot, Reset } from "pages";
+import { Auth, Register, Forgot, Reset, Account, Home } from "pages";
 import { User } from "context/user";
 import "antd/dist/antd.dark.css";
 import "./app.scss";
@@ -35,13 +35,13 @@ const App = () => {
       <User.Provider value={value}>
         <div className="app">
           <Header />
-          <div className="main-container">
+          <div
+            className={`main-container ${
+              window.location.pathname === "/" ? "home" : ""
+            }`}
+          >
             <Switch>
-              <Router
-                exact
-                path="/"
-                component={() => <div className="home">home</div>}
-              />
+              <Route exact path="/" component={Home} />
               <Route exact path="/auth" component={Auth} />
               <Route exact path="/auth/create" component={Register} />
               <Route exact path="/auth/forgot" component={Forgot} />
@@ -49,11 +49,7 @@ const App = () => {
                 path="/auth/reset/:token([0-9a-z]{36})"
                 component={Reset}
               />
-              <PrivateRoute
-                exact
-                path="/account"
-                component={() => <span> hi dear. </span>}
-              />
+              <PrivateRoute exact path="/account" component={Account} />
               <Redirect to="/" />
             </Switch>
           </div>

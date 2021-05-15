@@ -137,11 +137,11 @@ exports.password = (req, res) => {
         ],
       });
     } else {
-      Admin.findById(req.user.id).then((admin) => {
-        if (bcrypt.compareSync(current_password, admin.password)) {
-          var duplicate = bcrypt.compareSync(confirm_password, admin.password);
-          admin.password = confirm_password;
-          admin.save(() => res.json({ status: true, duplicate }));
+      User.findById(req.user.id).then((user) => {
+        if (bcrypt.compareSync(current_password, user.password)) {
+          var duplicate = bcrypt.compareSync(confirm_password, user.password);
+          user.password = confirm_password;
+          user.save(() => res.json({ status: true, duplicate }));
         } else
           return res.status(400).json({
             status: false,

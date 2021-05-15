@@ -1,8 +1,19 @@
 #header {
-  position: relative;
+  position: fixed;
+  top: 0;
   z-index: 10;
+  width: 100%;
   max-width: 100%;
+  background: #141414;
   border-bottom: 1px solid #5f6368;
+  &.home {
+    background: transparent;
+    border-bottom: none;
+  }
+  &.home.scrolled {
+    background: #141414;
+    border-bottom: 1px solid #5f6368;
+  }
   .ant-row {
     height: 56px;
     flex-flow: nowrap;
@@ -20,6 +31,9 @@
         }
         align-items: center;
         display: flex;
+        .ant-spin {
+          display: flex;
+        }
         a {
           .ant-btn {
             font-size: 12px;

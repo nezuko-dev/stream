@@ -1,0 +1,66 @@
+.main {
+  .banner {
+    position: relative;
+    width: 100%;
+    &::before {
+      opacity: 1;
+    }
+    @media (min-width: 992px) {
+      display: grid;
+      grid-template-columns: auto calc(100vw / 2.67 * 1.78);
+      grid-template-rows: 1fr;
+      &::before {
+        transition: opacity 0.5s ease-in-out;
+        content: "";
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: calc(100vw / (1920 / 720) / 4);
+        background: linear-gradient(0deg, #161616 0%, rgba(22, 22, 22, 0) 100%);
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: calc(100vw / (1920 / 720) / 4);
+        background: linear-gradient(
+          180deg,
+          #161616 0%,
+          rgba(22, 22, 22, 0) 100%
+        );
+      }
+    }
+    @media (min-width: 1366px) {
+      &::before {
+        height: calc(100vw / (1920 / 720) / 3);
+      }
+      &::after {
+        height: calc(100vw / (1920 / 720) / 3);
+      }
+    }
+    .img-container {
+      position: absolute;
+      width: 100%;
+      height: 0;
+      overflow: hidden;
+      padding-top: calc(16 / 9 * 100%);
+      @media (min-width: 576px) {
+        z-index: -1;
+        padding-top: calc(9 / 16 * 100%);
+      }
+      @media (min-width: 992px) {
+        padding-top: calc(3 / 8 * 100%);
+      }
+      .banner-img {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
+}

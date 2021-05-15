@@ -1,11 +1,20 @@
-.ant-btn {
-  border-radius: 4px;
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
 }
 .ant-card {
   border-radius: 8px;
 }
 .app {
+  margin-top: 56px;
+  min-height: calc(100vh - 56px);
+
   .main-container {
+    &.home {
+      padding: 0 !important;
+    }
     // min-height: calc(100vh - 64px);
     padding: 22px 64px 32px 64px;
     @media (max-width: 1024px) {
@@ -17,4 +26,27 @@
       padding-left: 16px;
     }
   }
+}
+// normalize
+.ant-dropdown-menu {
+  position: relative;
+  margin: 0;
+  padding: 4px 0;
+  text-align: left;
+  list-style-type: none;
+
+  background-clip: padding-box;
+  border-radius: 4px;
+  outline: none;
+}
+.ant-btn:not(.ant-btn-circle) {
+  border-radius: 4px;
+}
+.ant-modal-content {
+  border-radius: 8px;
+}
+html,
+body {
+  // height: 1500px;
+  height: unset;
 }
