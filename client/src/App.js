@@ -17,7 +17,7 @@ const App = () => {
   useEffect(() => {
     if (Cookies.get("stream-token")) {
       axios
-        .get("/api/auth")
+        .get("/api/account")
         .then((response) => {
           if (response.data.status) {
             setUser(response.data.user);

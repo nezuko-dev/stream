@@ -7,11 +7,15 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { User } from "context/user";
+import Cookie from "js-cookie";
 import "./style.scss";
 const Header = () => {
   const location = useLocation();
   const [current] = useState(location.pathname);
   const { user } = useContext(User);
+  const token = Cookie.get("stream-token");
+
+  console.log(user);
   return (
     <div id="header">
       <Row justify="space-between">
@@ -38,7 +42,7 @@ const Header = () => {
           <div className="menu-item">
             {user ? (
               <Link to="/account">
-                <Button>{user.name}</Button>
+                <Button>{user.email}</Button>
               </Link>
             ) : (
               <Link to="/auth">

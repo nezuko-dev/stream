@@ -22,10 +22,10 @@ const Register = () => {
               className="custom-form"
               onFinish={(values) => {
                 setError(null);
-                if (values.password_confirm !== values.password)
+                if (values.confirm_password !== values.password)
                   setError([
                     {
-                      param: "password_confirm",
+                      param: "confirm_password",
                       msg: "Нууц үг тохирохгүй байна.",
                     },
                   ]);
@@ -92,12 +92,12 @@ const Register = () => {
               </Form.Item>
 
               <Form.Item
-                name="password_confirm"
+                name="confirm_password"
                 rules={[{ required: true, message: "Нууц үгээ оруулна уу!" }]}
-                {...(errors?.find((error) => error.param === "password_confirm")
+                {...(errors?.find((error) => error.param === "confirm_password")
                   ? {
                       help: errors.find(
-                        (error) => error.param === "password_confirm"
+                        (error) => error.param === "confirm_password"
                       ).msg,
                       validateStatus: "error",
                     }
