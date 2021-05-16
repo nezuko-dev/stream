@@ -10,22 +10,7 @@
 .app {
   margin-top: 56px;
   min-height: calc(100vh - 56px);
-
-  .main-container {
-    &.home {
-      padding: 0 !important;
-    }
-    // min-height: calc(100vh - 64px);
-    padding: 22px 64px 32px 64px;
-    @media (max-width: 1024px) {
-      padding-right: 48px;
-      padding-left: 48px;
-    }
-    @media (max-width: 768px) {
-      padding-right: 16px;
-      padding-left: 16px;
-    }
-  }
+  display: flex;
 }
 // normalize
 .ant-dropdown-menu {
@@ -47,6 +32,8 @@
 }
 html,
 body {
-  // height: 1500px;
   height: unset;
+}
+body {
+  background-color: #161616;
 }

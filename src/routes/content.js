@@ -8,5 +8,6 @@ const validator = require("../middleware/validator");
  * /api/content:
  */
 router.get("/", content.index);
+router.get("/titles/:id", token, content.titles);
 
 module.exports = router;

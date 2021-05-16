@@ -16,9 +16,7 @@ import { User } from "context/user";
 const Account = () => {
   const { user } = useContext(User);
   const [errors, setError] = useState(null);
-
   const [password] = Form.useForm();
-
   const [disabled, disable] = useState("");
   return (
     <div className="account">
