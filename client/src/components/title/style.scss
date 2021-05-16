@@ -1,0 +1,60 @@
+.title {
+  display: flex;
+  cursor: pointer;
+  outline: none;
+  flex-shrink: 0;
+  background-color: transparent;
+  @media (max-width: 576px) {
+    margin-left: 5px;
+    width: calc(
+      ((100vw - (100vw - 100%)) / 3) - (3.3333333333px + (14px / 3 * 2))
+    );
+  }
+  @media (min-width: 768px) {
+    margin-left: 5px;
+    width: calc(((100vw - (100vw - 100%)) / 4) - (3.75px + (20px / 4 * 2)));
+  }
+  @media (min-width: 992px) {
+    margin-left: 6px;
+    width: calc(((100vw - (100vw - 100%)) / 4) - (4.5px + (26px / 4 * 2)));
+  }
+  @media (min-width: 1366px) {
+    margin-left: 6px;
+    width: calc(((100vw - (100vw - 100%)) / 5) - (4.8px + (32px / 5 * 2)));
+  }
+  &:nth-child(2) {
+    margin-left: 0;
+  }
+  .container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 3px;
+    padding-top: calc(1440 / 960 * 100%);
+    @media (min-width: 768px) {
+      padding-top: calc(1080 / 1920 * 100%);
+    }
+    .image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 3px;
+      overflow: hidden;
+      background-size: cover;
+      .image-wrapper {
+        display: inline-block;
+        max-width: 100%;
+        overflow: hidden;
+        position: relative;
+        box-sizing: border-box;
+        margin: 0px;
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}

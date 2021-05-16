@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Row, Col, Menu, Button, Spin, Modal, Dropdown } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -17,24 +17,7 @@ const Header = () => {
   const location = useLocation();
   const [current] = useState(location.pathname);
   const { user, setUser } = useContext(User);
-  const [classes, setClasses] = useState("");
   const token = Cookie.get("stream-token");
-
-  useEffect(() => {
-    window.onscroll = () => {
-      if (
-        document.documentElement.scrollTop > 56 &&
-        location.pathname === "/"
-      ) {
-        setClasses(" scrolled");
-      } else if (
-        document.documentElement.scrollTop < 56 &&
-        location.pathname === "/"
-      ) {
-        setClasses("");
-      }
-    };
-  });
   const settings = (
     <Menu>
       <Menu.Item icon={<UserOutlined />}>
@@ -69,10 +52,7 @@ const Header = () => {
     </Menu>
   );
   return (
-    <div
-      id="header"
-      className={`${location.pathname === "/" ? "home" : ""}` + classes}
-    >
+    <div id="header">
       <Row justify="space-between">
         <Col>
           <h1>

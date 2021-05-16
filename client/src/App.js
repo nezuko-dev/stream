@@ -35,11 +35,7 @@ const App = () => {
       <User.Provider value={value}>
         <div className="app">
           <Header />
-          <div
-            className={`main-container ${
-              window.location.pathname === "/" ? "home" : ""
-            }`}
-          >
+          <div className="main-container">
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/auth" component={Auth} />

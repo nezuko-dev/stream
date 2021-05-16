@@ -6,14 +6,7 @@
   max-width: 100%;
   background: #141414;
   border-bottom: 1px solid #5f6368;
-  &.home {
-    background: transparent;
-    border-bottom: none;
-  }
-  &.home.scrolled {
-    background: #141414;
-    border-bottom: 1px solid #5f6368;
-  }
+
   .ant-row {
     height: 56px;
     flex-flow: nowrap;
