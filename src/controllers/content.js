@@ -2,6 +2,7 @@ const Franchise = require("../models/franchise");
 const Content = require("../models/content");
 const Genre = require("../models/genre");
 const Title = require("../models/title");
+const Rent = require("../models/rent");
 const ObjectId = require("mongoose").Types.ObjectId;
 exports.index = async (req, res) => {
   // latest
@@ -41,10 +42,26 @@ exports.titles = (req, res) => {
         select: "-editor -status -size",
       })
       .then(async (data) => {
-        var titles = await Title.find({ franchise: data.franchise }).select(
-          "label name"
-        );
-        return res.json({ status: true, data, titles });
-      });
-  } else res.status(404);
+        if (data) {
+          var titles = await Title.find({ franchise: data.franchise }).select(
+            "label name thumbnail"
+          );
+          var rent = await Rent.findOne({
+            user: req.user.id,
+            title: id,
+            expires: { $gt: Date.now() },
+          });
+          return res.json({
+            status: true,
+            data: { ...data._doc, rent },
+            titles,
+          });
+        } else res.status(404).json({ msg: "Үзвэр олдсонгүй" });
+      })
+      .catch((err) =>
+        res
+          .status(500)
+          .json({ msg: "Алдаа гарлаа та дараа дахин оролдоно уу." })
+      );
+  } else res.status(404).json({ msg: "Үзвэр олдсонгүй" });
 };

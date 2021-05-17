@@ -7,9 +7,13 @@ const Title = (props) => {
   );
   const { _id } = props;
   useEffect(() => {
-    window.addEventListener("resize", () => {
+    const resize = () => {
       setType(window.innerWidth > 768 ? "cover" : "poster");
-    });
+    };
+    window.addEventListener("resize", resize);
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
   });
   return (
     <Link className="title" to={`/titles/${_id}`}>

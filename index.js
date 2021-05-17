@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
 const passport = require("passport");
 const cookie = require("cookie-session");
 const mongoose = require("mongoose");
@@ -28,6 +30,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.set("io", io);
 app.use("/api", require("./src/routes"));
 app.use(
   "/content",
@@ -38,7 +41,8 @@ if (process.env.NODE_ENV == "production") {
     res.sendFile(path.join(__dirname + "/client/build/index.html"))
   );
 }
-app.listen(process.env.PORT || 5000, "0.0.0.0", () => {
+
+http.listen(process.env.PORT || 5000, "0.0.0.0", () => {
   console.log(`Streaming App listening on port ${process.env.PORT || 5000}`);
   console.log("Press Ctrl+C to quit.");
 });

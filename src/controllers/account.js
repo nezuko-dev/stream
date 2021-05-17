@@ -177,9 +177,20 @@ exports.create = async (req, res) => {
           ],
         });
       } else
-        User.create({ email, password }).then((data) =>
-          res.json({ status: true })
-        );
+        User.create({ email, password }).then((user) => {
+          req.logIn(user, (err) => {
+            if (err)
+              return res.status(400).json({
+                errors: [
+                  {
+                    param: "password",
+                    msg: message ? message.message : "Failed to login",
+                  },
+                ],
+              });
+            return res.json({ status: true });
+          });
+        });
     }
   }
 };

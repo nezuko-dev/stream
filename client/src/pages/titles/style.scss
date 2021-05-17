@@ -9,7 +9,7 @@
   width: 100%;
   position: relative;
   .preview {
-    max-width: 1000px;
+    max-width: 880px;
     width: 100%;
     margin: 0 auto;
     background-color: #161616;
@@ -170,43 +170,99 @@
         }
       }
       .title-episodes {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: wrap;
         .episodes-wrapper {
           width: 100%;
-          max-width: 600px;
-          margin: 0 auto;
+          display: grid;
+          grid-gap: 1em;
+          align-items: stretch;
+          justify-items: stretch;
+          @media (min-aspect-ratio: 3 / 9) {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          @media (min-aspect-ratio: 7 / 9) {
+            grid-template-columns: repeat(3, 1fr);
+          }
+
           .episode {
-            height: 100px;
-            @media (max-width: 576px) {
-              height: 70px;
+            margin: 0.1em;
+            border-radius: 0.25em;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            min-height: 15em;
+            @media (min-aspect-ratio: 3 / 9) {
+              flex: 0 0 47%;
+              min-height: 17em;
+            }
+            @media (min-aspect-ratio: 7 / 9) {
+              flex: 0 0 31%;
+              min-height: 17em;
             }
             a {
-              height: 100%;
-              display: flex;
-              justify-content: space-between;
-              transition: background-color 0.2s ease-in-out;
-              border-radius: 3px;
-              .thumbnail {
-                border-radius: 3px;
-                overflow: hidden;
-                position: relative;
-                height: 100%;
-                @media (min-width: 576px) {
-                  width: calc((1280 / 720) * 80px);
-                }
-                @media (min-width: 768px) {
-                  width: calc((1280 / 720) * 90px);
-                }
-                @media (min-width: 992px) {
-                  width: calc((1280 / 720) * 100px);
-                }
-                @media (min-width: 1366px) {
-                  width: calc((1280 / 720) * 110px);
+              &:hover {
+                .thumbnail {
+                  .thumbnail-overlay {
+                    opacity: 1;
+                  }
                 }
               }
+              .thumbnail {
+                border-radius: 3px 3px 0 0;
+                overflow: hidden;
+                position: relative;
+                &::before {
+                  content: "";
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                  background-image: linear-gradient(
+                    198deg,
+                    rgba(0, 0, 0, 0.9) 0,
+                    rgba(24, 24, 24, 0.5) 20%,
+                    transparent 28%
+                  );
+                }
+                img {
+                  height: 100%;
+                  width: 100%;
+                  object-fit: cover;
+                }
+                .episode-label {
+                  position: absolute;
+                  top: 5%;
+                  right: 5%;
+                  white-space: nowrap;
+                  span {
+                    color: white;
+                    font-size: 15px;
+                  }
+                }
+                .thumbnail-overlay {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  opacity: 0;
+                  transition: opacity 0.2s ease-in;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  bottom: 0;
+                  .anticon {
+                    font-size: 40px;
+                    color: rgba(255, 255, 255, 0.8);
+                  }
+                }
+              }
+            }
+            .episode-body {
+              background-color: #2f2f2f;
+              min-height: 100%;
+              padding: 1em;
+              margin: 0;
+              color: #d2d2d2;
             }
           }
         }
@@ -245,5 +301,19 @@
         }
       }
     }
+  }
+}
+.rent-modal {
+  .rent-info {
+    padding-top: 12px;
+    text-align: center;
+  }
+  .qr-placeholder {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    width: 200px;
+    border-radius: 8px;
+    margin: 10px auto;
   }
 }
