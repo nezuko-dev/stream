@@ -6,7 +6,16 @@ import {
   Redirect,
 } from "react-router-dom";
 import { PrivateRoute, Header } from "components";
-import { Auth, Register, Forgot, Reset, Account, Home, Titles } from "pages";
+import {
+  Auth,
+  Register,
+  Forgot,
+  Reset,
+  Account,
+  Home,
+  Titles,
+  Stream,
+} from "pages";
 import { User } from "context/user";
 import "antd/dist/antd.dark.css";
 import "./app.scss";
@@ -43,6 +52,11 @@ const App = () => {
             <Route path="/auth/reset/:token([0-9a-z]{36})" component={Reset} />
             <PrivateRoute path="/titles/:id([0-9a-z]{24})" component={Titles} />
             <PrivateRoute exact path="/account" component={Account} />
+            <PrivateRoute
+              exact
+              path="/stream/:title([0-9a-z]{24})/:episode([0-9a-z]{24})"
+              component={Stream}
+            />
             <Redirect to="/" />
           </Switch>
         </main>

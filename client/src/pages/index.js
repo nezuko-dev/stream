@@ -5,4 +5,6 @@ import Reset from "./auth/reset";
 import Account from "./account";
 import Home from "./home";
 import Titles from "./titles";
-export { Auth, Register, Forgot, Reset, Account, Home, Titles };
+import Stream from "./stream";
+
+export { Auth, Register, Forgot, Reset, Account, Home, Titles, Stream };

@@ -1,25 +1,25 @@
 const Rent = require("../models/rent");
 const Title = require("../models/title");
+const Invoice = require("../models/invoice");
 const axios = require("axios");
-const { compareSync } = require("bcryptjs");
 exports.index = (req, res) => {
   return res.json({ status: true });
 };
 exports.monpay = async (req, res) => {
   const { title } = req.body;
   var io = req.app.get("io");
-  io.on("connection", (socket) => {
-    socket.emit("monpay", {
-      state: "Төлөгдөөгүй",
-      connected: true,
+  io.sockets.on("connection", (socket) => {
+    socket.on("uuid", (uuid) => {
+      socket.join(uuid);
     });
   });
+
   const check = (uuid, id) => {
+    var socket = io.to(uuid);
     var check_uuid = setInterval(async () => {
       //10 секунд болгон төлөгдсөн эсэхийн шалгах
-      io.emit("monpay", {
+      socket.emit("monpay", {
         state: "Төлөгдөөгүй",
-        connected: true,
       });
       axios
         .get(
@@ -34,14 +34,23 @@ exports.monpay = async (req, res) => {
             },
           }
         )
-        .then((response) => {
+        .then(async (response) => {
           let { code, result, info } = response.data;
           if (code === 0) {
-            io.emit("monpay", {
+            socket.emit("monpay", {
               state: "Төлөгдсөн",
               code: true,
-              connected: true,
             });
+            var duration = await Title.findById(title);
+            Rent.create({
+              title,
+              user: req.user.id,
+              expires: Date.now() + duration.price.duration * 60 * 60 * 1000,
+            });
+            Invoice.findOneAndUpdate(
+              { uuid },
+              { status: true, paid: Date.now() }
+            );
             clearInterval(check_uuid);
           }
         })
@@ -95,9 +104,16 @@ exports.monpay = async (req, res) => {
 
               if (code === 0) {
                 check(result.uuid, req.user.id);
+                Invoice.create({
+                  user: req.user.id,
+                  title,
+                  uuid: result.uuid,
+                  amount: data.price.amount,
+                });
                 return res.json({
                   status: true,
                   data: result.qrcode,
+                  uuid: result.uuid,
                 });
               } else {
                 return res

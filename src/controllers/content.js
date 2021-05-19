@@ -39,7 +39,7 @@ exports.titles = (req, res) => {
       .populate({
         path: "episodes.content",
         model: "content",
-        select: "-editor -status -size",
+        select: "-editor -status -size -_id -name",
       })
       .then(async (data) => {
         if (data) {
@@ -50,7 +50,7 @@ exports.titles = (req, res) => {
             user: req.user.id,
             title: id,
             expires: { $gt: Date.now() },
-          });
+          }).select("expires");
           return res.json({
             status: true,
             data: { ...data._doc, rent },
@@ -64,4 +64,35 @@ exports.titles = (req, res) => {
           .json({ msg: "Алдаа гарлаа та дараа дахин оролдоно уу." })
       );
   } else res.status(404).json({ msg: "Үзвэр олдсонгүй" });
+};
+exports.stream = async (req, res) => {
+  const { id, episode } = req.params;
+  if (ObjectId.isValid(id)) {
+    Title.findOne({ _id: id, "episodes._id": episode })
+      .select("name episodes")
+      .populate({
+        path: "episodes.content",
+        model: "content",
+        select: "thumbnail",
+      })
+      .then(async (data) => {
+        if (data) {
+          if (data.price.amount < 0) {
+            const rent = await Rent.findOne({
+              title: id,
+              user: req.user.id,
+              expires: { $gt: Date.now() },
+            });
+            console.log(rent);
+            if (rent) return res.json({ status: true, data });
+            else
+              return res.json({
+                status: false,
+                msg: "Tа энэ контентыг түрээслээгүй байна.",
+              });
+          } else return res.json({ status: true, data });
+        } else return res.status(404).json({ msg: "Үзвэр олдсонгүй" });
+      });
+  } else
+    return res.json.status(400).json({ status: false, msg: "Алдаатай хүсэлт" });
 };

@@ -9,6 +9,8 @@ import {
   UserOutlined,
   ExclamationCircleOutlined,
   LogoutOutlined,
+  FileDoneOutlined,
+  CreditCardOutlined,
 } from "@ant-design/icons";
 import { User } from "context/user";
 import Cookie from "js-cookie";
@@ -22,6 +24,12 @@ const Header = () => {
     <Menu>
       <Menu.Item icon={<UserOutlined />}>
         <Link to="/account">Mиний хаяг</Link>
+      </Menu.Item>
+      <Menu.Item icon={<FileDoneOutlined />}>
+        <Link to="/invoice">Tөлбөрийн түүх</Link>
+      </Menu.Item>
+      <Menu.Item icon={<CreditCardOutlined />}>
+        <Link to="/rents">Tүрээслэсэн контентууд</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item icon={<LogoutOutlined />}>

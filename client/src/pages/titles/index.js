@@ -4,7 +4,7 @@ import moment from "moment";
 import QRCode from "qrcode";
 import { PlayCircleOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { Spin, Button, Dropdown, Menu, message, Modal } from "antd";
+import { Spin, Button, Dropdown, Menu, message, Modal, Row, Col } from "antd";
 import io from "socket.io-client";
 
 import "./style.scss";
@@ -60,8 +60,7 @@ const Titles = (props) => {
         className={status.code ? "d-none" : ""}
         style={{ color: countdown < 300 ? "#dc3545" : "" }}
       >
-        Tөлбөр цуцлагдах хугацаа{" "}
-        {moment.unix(countdown).utc().format("mm[:]ss []")}
+        Цуцлагдах хугацаа {moment.unix(countdown).utc().format("mm[:]ss []")}
       </p>
     );
   };
@@ -120,7 +119,7 @@ const Titles = (props) => {
                                         height: 200,
                                         margin: 2,
                                         color: {
-                                          dark: "#20733f",
+                                          dark: "#000",
                                           light: "#fff",
                                         },
                                       },
@@ -135,14 +134,26 @@ const Titles = (props) => {
                                       }
                                     );
                                     const socket = io();
-                                    socket.on("monpay", (data) => {
-                                      console.log(data);
-                                      setStatus(data);
-                                      if (data.code) {
-                                        setLoading(false);
-                                        openRent(null);
-                                        socket.close();
-                                      }
+                                    socket.on("connect", (e) => {
+                                      setStatus({ state: "Шалгаж байна." });
+                                      socket.emit("uuid", response.data.uuid);
+                                      socket.on("monpay", (data) => {
+                                        setStatus(data);
+                                        if (data.code) {
+                                          setLoading(false);
+                                          setState({
+                                            ...state,
+                                            rent: {
+                                              expires: moment({}).add(
+                                                state.price.duration,
+                                                "hours"
+                                              ),
+                                            },
+                                          });
+                                          openRent(null);
+                                          socket.close();
+                                        }
+                                      });
                                     });
                                   } else
                                     message.error(
@@ -157,15 +168,24 @@ const Titles = (props) => {
                             Tүрээслэх
                           </Button>
                         ) : (
-                          <Link to={`/stream/${state.episodes[0].content._id}`}>
-                            <Button
-                              icon={<PlayCircleOutlined />}
-                              size="large"
-                              type="primary"
-                            >
-                              Шууд үзэх
-                            </Button>
-                          </Link>
+                          <div>
+                            <Link to={`/stream/${id}/${state.episodes[0]._id}`}>
+                              <Button
+                                icon={<PlayCircleOutlined />}
+                                size="large"
+                                type="primary"
+                              >
+                                Шууд үзэх
+                              </Button>
+                            </Link>
+                            <p>
+                              {state.rent
+                                ? `Tүрээсийн дуусах хугацаа ${moment({}).to(
+                                    state.rent.expires
+                                  )}`
+                                : null}
+                            </p>
+                          </div>
                         )}
                       </div>
                       <div className="meta">
@@ -233,7 +253,7 @@ const Titles = (props) => {
                     {state.episodes.length > 1
                       ? state.episodes.map((episode, index) => (
                           <div className="episode" key={episode._id}>
-                            <Link to={`/stream/${episode.content._id}`}>
+                            <Link to={`/stream/${id}/${episode._id}`}>
                               <div className="thumbnail">
                                 <img
                                   src={episode.content.thumbnail.sm}
@@ -267,23 +287,29 @@ const Titles = (props) => {
         footer={null}
         visible={Boolean(rent)}
         className="rent-modal"
+        centered
       >
         {state ? (
           <>
             <div className="rent-info">
               <p>
                 Tа доорх QR кодыг Monpay application ээр уншуулан төлбөрөө төлнө
-                үү.
-              </p>
-              <p>
-                Контентын үнэ: <b>₮{state.price.amount}</b> Tүрээсийн хугацаа:{" "}
-                <b>{state.price.duration}цаг</b>
+                үү. Tүрээсийн хугацаа: <b>{state.price.duration}цаг</b>
               </p>
             </div>
             <div className="qr-placeholder">
               <img src={rent} alt="Rent QR" />
             </div>
-            {status ? <Counter /> : <Spin />}
+            {status ? (
+              <Row justify="space-between">
+                <Col>
+                  <Counter />
+                </Col>
+                <Col style={{ textAlign: "rigth" }}>{status?.state}</Col>
+              </Row>
+            ) : (
+              <Spin />
+            )}
           </>
         ) : (
           <div className="loading">
