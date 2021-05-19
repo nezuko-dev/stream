@@ -267,7 +267,10 @@ const Titles = (props) => {
                                 </div>
                               </div>
                             </Link>
-                            <div className="episode-body">{episode.name}</div>
+                            <div className="episode-body">
+                              {episode.name}
+                              <p>{episode.plot}</p>
+                            </div>
                           </div>
                         ))
                       : null}

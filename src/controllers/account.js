@@ -27,7 +27,13 @@ exports.auth = (req, res, next) => {
             },
           ],
         });
-      return res.json({ status: true });
+      else {
+        const ip =
+          req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+        User.findOneAndUpdate({ _id: user._id }, { ip })
+          .then(() => res.json({ status: true }))
+          .catch((err) => console.log(err));
+      }
     });
   })(req, res, next);
 };
@@ -188,7 +194,11 @@ exports.create = async (req, res) => {
                   },
                 ],
               });
-            return res.json({ status: true });
+            const ip =
+              req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+            User.findOneAndUpdate({ _id: user._id }, { ip })
+              .then(() => res.json({ status: true }))
+              .catch((err) => console.log(err));
           });
         });
     }

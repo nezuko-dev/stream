@@ -48,10 +48,14 @@ const Stream = ({ match }) => {
       })
       .catch((err) => {
         if (err.response.data) {
-          return message.error(err.response.data.msg);
+          return message.error({
+            content: err.response.data.msg,
+            duration: 10,
+            onClose: () => location.push(`/titles/${title}`),
+          });
         }
       });
-  }, [title, episode]);
+  }, [title, episode, location]);
   return (
     <>
       <div id="stream">

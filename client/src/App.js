@@ -30,6 +30,9 @@ const App = () => {
         .then((response) => {
           if (response.data.status) {
             setUser(response.data.user);
+          } else {
+            Cookies.remove("stream-token");
+            return <Redirect to="/auth" />;
           }
         })
         .catch(() => {

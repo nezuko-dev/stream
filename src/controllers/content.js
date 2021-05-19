@@ -69,7 +69,7 @@ exports.stream = async (req, res) => {
   const { id, episode } = req.params;
   if (ObjectId.isValid(id)) {
     Title.findOne({ _id: id, "episodes._id": episode })
-      .select("name episodes")
+      .select("name episodes price")
       .populate({
         path: "episodes.content",
         model: "content",
@@ -77,16 +77,15 @@ exports.stream = async (req, res) => {
       })
       .then(async (data) => {
         if (data) {
-          if (data.price.amount < 0) {
+          if (data.price.amount > 0) {
             const rent = await Rent.findOne({
               title: id,
               user: req.user.id,
               expires: { $gt: Date.now() },
             });
-            console.log(rent);
             if (rent) return res.json({ status: true, data });
             else
-              return res.json({
+              return res.status(400).json({
                 status: false,
                 msg: "Tа энэ контентыг түрээслээгүй байна.",
               });

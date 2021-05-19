@@ -37,10 +37,6 @@ exports.monpay = async (req, res) => {
         .then(async (response) => {
           let { code, result, info } = response.data;
           if (code === 0) {
-            socket.emit("monpay", {
-              state: "Төлөгдсөн",
-              code: true,
-            });
             var duration = await Title.findById(title);
             Rent.create({
               title,
@@ -50,7 +46,12 @@ exports.monpay = async (req, res) => {
             Invoice.findOneAndUpdate(
               { uuid },
               { status: true, paid: Date.now() }
-            );
+            ).then(() => {
+              socket.emit("monpay", {
+                state: "Төлөгдсөн",
+                code: true,
+              });
+            });
             clearInterval(check_uuid);
           }
         })
