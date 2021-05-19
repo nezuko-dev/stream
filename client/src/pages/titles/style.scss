@@ -263,6 +263,15 @@
               padding: 1em;
               margin: 0;
               color: #d2d2d2;
+              .episode-title {
+                color: #fff;
+                font-size: 1em;
+                font-weight: 700;
+              }
+              .episode-plot {
+                margin: 0;
+                color: #d2d2d2;
+              }
             }
           }
         }

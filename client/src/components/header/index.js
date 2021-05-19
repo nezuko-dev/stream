@@ -29,7 +29,7 @@ const Header = () => {
         <Link to="/invoice">Tөлбөрийн түүх</Link>
       </Menu.Item>
       <Menu.Item icon={<CreditCardOutlined />}>
-        <Link to="/rents">Tүрээслэсэн контентууд</Link>
+        <Link to="/invoice?rent">Tүрээслэсэн контентууд</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item icon={<LogoutOutlined />}>
@@ -86,7 +86,11 @@ const Header = () => {
             {token && !user ? (
               <Spin />
             ) : user ? (
-              <Dropdown overlay={settings} placement="bottomCenter">
+              <Dropdown
+                overlay={settings}
+                trigger={["click"]}
+                placement="bottomCenter"
+              >
                 <Button>{user.email}</Button>
               </Dropdown>
             ) : (

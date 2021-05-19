@@ -15,6 +15,7 @@ import {
   Home,
   Titles,
   Stream,
+  Invoice,
 } from "pages";
 import { User } from "context/user";
 import "antd/dist/antd.dark.css";
@@ -54,6 +55,7 @@ const App = () => {
             <Route exact path="/auth/forgot" component={Forgot} />
             <Route path="/auth/reset/:token([0-9a-z]{36})" component={Reset} />
             <PrivateRoute path="/titles/:id([0-9a-z]{24})" component={Titles} />
+            <PrivateRoute path="/invoice" component={Invoice} />
             <PrivateRoute exact path="/account" component={Account} />
             <PrivateRoute
               exact

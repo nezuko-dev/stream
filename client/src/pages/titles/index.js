@@ -268,8 +268,10 @@ const Titles = (props) => {
                               </div>
                             </Link>
                             <div className="episode-body">
-                              {episode.name}
-                              <p>{episode.plot}</p>
+                              <span className="episode-title">
+                                {episode.name}
+                              </span>
+                              <p className="episode-plot">{episode.plot}</p>
                             </div>
                           </div>
                         ))

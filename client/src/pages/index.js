@@ -6,5 +6,16 @@ import Account from "./account";
 import Home from "./home";
 import Titles from "./titles";
 import Stream from "./stream";
+import Invoice from "./invoice";
 
-export { Auth, Register, Forgot, Reset, Account, Home, Titles, Stream };
+export {
+  Auth,
+  Register,
+  Forgot,
+  Reset,
+  Account,
+  Home,
+  Titles,
+  Stream,
+  Invoice,
+};

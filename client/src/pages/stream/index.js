@@ -22,7 +22,14 @@ const Stream = ({ match }) => {
     if (active) {
       if (HLS.isSupported()) {
         if (window.hls) destroy();
-        window.hls = new HLS({ maxBufferSize: 1 });
+        window.hls = new HLS({
+          startLevel: -1,
+          testBandwidth: true,
+          maxBufferLength: 10,
+          maxMaxBufferLength: 10,
+          fragLoadingMaxRetry: 100,
+          stretchShortVideoTrack: true,
+        });
         window.hls.loadSource(
           `/content/stream/${active.content._id}/master.nez`
         );

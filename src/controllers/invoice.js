@@ -3,7 +3,15 @@ const Title = require("../models/title");
 const Invoice = require("../models/invoice");
 const axios = require("axios");
 exports.index = (req, res) => {
-  return res.json({ status: true });
+  if (req.query.rent === "true") {
+    Rent.find({ user: req.user.id })
+      .populate("title", "name price")
+      .then((data) => res.json({ status: true, data }));
+  } else {
+    Invoice.find({ user: req.user.id })
+      .populate("title", "name")
+      .then((data) => res.json({ status: true, data }));
+  }
 };
 exports.monpay = async (req, res) => {
   const { title } = req.body;
