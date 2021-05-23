@@ -7,7 +7,7 @@ import Home from "./home";
 import Titles from "./titles";
 import Stream from "./stream";
 import Invoice from "./invoice";
-
+import Browse from "./browse";
 export {
   Auth,
   Register,
@@ -18,4 +18,5 @@ export {
   Titles,
   Stream,
   Invoice,
+  Browse,
 };

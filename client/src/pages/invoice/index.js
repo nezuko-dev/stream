@@ -49,7 +49,8 @@ const Invoice = (props) => {
           title: "Дуусах хугацаа",
           dataIndex: "expires",
           key: "expires",
-          render: (text) => moment({}).to(text),
+          render: (text) =>
+            moment({}).diff(text) > 0 ? "Дууссан" : moment({}).to(text),
         },
       ]
     : [
@@ -103,7 +104,7 @@ const Invoice = (props) => {
             tabList={[
               {
                 key: "invoice",
-                tab: "Нихэмжлэлүүд",
+                tab: "Нэхэмжлэлүүд",
               },
               {
                 key: "rent",

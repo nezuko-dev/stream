@@ -5,7 +5,6 @@ import axios from "axios";
 import {
   PlaySquareOutlined,
   AppstoreOutlined,
-  SearchOutlined,
   UserOutlined,
   ExclamationCircleOutlined,
   LogoutOutlined,
@@ -76,9 +75,6 @@ const Header = () => {
             <Menu mode="horizontal" activeKey={current}>
               <Menu.Item key="/browse" icon={<AppstoreOutlined />}>
                 <Link to="/browse">Үзвэрүүд</Link>
-              </Menu.Item>
-              <Menu.Item key="/search" icon={<SearchOutlined />}>
-                <Link to="/search">Хайх</Link>
               </Menu.Item>
             </Menu>
           </div>

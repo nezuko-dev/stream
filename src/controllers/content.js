@@ -95,3 +95,9 @@ exports.stream = async (req, res) => {
   } else
     return res.json.status(400).json({ status: false, msg: "Алдаатай хүсэлт" });
 };
+exports.browse = async (req, res) => {
+  return res.json({
+    status: true,
+    data: await Title.find({}).select("-episodes").sort({ created: -1 }),
+  });
+};

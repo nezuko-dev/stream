@@ -10,5 +10,6 @@ const validator = require("../middleware/validator");
 router.get("/", content.index);
 router.get("/title/:id/:episode", token, content.stream);
 router.get("/titles/:id", token, content.titles);
+router.get("/browse", content.browse);
 
 module.exports = router;
